@@ -42,3 +42,5 @@ terra::ext(MNT)
 terra::crs(MNT) <- "epsg:2154"
 terra::plot(MNT, main = "MNT")
 terra::global(MNT, mean)
+
+COUCOU C4EST MAXILOU
