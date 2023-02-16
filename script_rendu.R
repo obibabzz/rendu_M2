@@ -42,3 +42,24 @@ terra::ext(MNT)
 terra::crs(MNT) <- "epsg:2154"
 terra::plot(MNT, main = "MNT")
 terra::global(MNT, mean)
+
+#péparation des données
+
+
+table_arbre1<- table_arbre[table_arbre$`Diam 1` < 30, ]
+table_arbre1 <- table_arbre1[ , -9]
+
+table_arbre2<- table_arbre[table_arbre$`Diam 1` >= 30, ]
+table_arbre2 <- table_arbre2[ , -8]
+
+names(table_arbre1)[8] <- "Diam"
+names(table_arbre2)[8] <- "Diam"
+
+table_arbre_def <- rbind(table_arbre1, table_arbre2)
+table_arbre_def <- table_arbre_def[table_arbre_def$Diam < 185,]
+
+write.csv(table_arbre_def, file="table_arbre_def.csv")
+
+table_arbre_def <- rowid_to_column(table_arbre_def, "ID")
+table_arbre1 <- subset(table_arbre_def, Dist_arbre > 15 & Diam > 70)
+table_arbre2 <- table_arbre_def[table_arbre_def$ID != table_arbre1$ID, ]
